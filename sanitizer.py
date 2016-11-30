@@ -2,6 +2,7 @@ import os,sys
 import re
 import string
 
+#Sydney says hello!
 
 def getRegex():
   regular_expression = re.compile(r"\(?"  # open parenthesis

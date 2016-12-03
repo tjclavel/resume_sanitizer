@@ -2,8 +2,6 @@ import os,sys
 import re
 import string
 
-#Sydney says hello!
-
 def getRegex():
   regular_expression = re.compile(r"\(?"  # open parenthesis
                                   r"(\d{3})?"  # area code
@@ -35,7 +33,7 @@ def removePhoneAndWeb(line, tags, regex):
 
 
 def removePII(resumeLines, pii):
-  tags =  ['.com', '.edu', 'http', 'https', '.org', '.net', 'www.']
+  tags =  ['@', '.com', '.edu', 'http', 'https', '.org', '.net', 'www.']
   regex = getRegex()
   #removePhoneAndWeb(resumeLines)
   i = 0 #ratchet -thomas
@@ -43,7 +41,9 @@ def removePII(resumeLines, pii):
     line = removePhoneAndWeb(line, tags, regex)
     for pairs in pii:
       pair = pairs.split('\\')
-      line = line.replace(pair[0], '<' + pair[1] + '>')
+      for word in line.split():
+        if word == part[0]:
+          line = line.replace(pair[0], '<' + pair[1] + '>')
     resumeLines[i] = line
     i = i + 1
   return resumeLines

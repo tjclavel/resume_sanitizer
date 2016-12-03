@@ -16,38 +16,11 @@ def getRegex():
   return regular_expression
 
 
-'''
-def removePhoneAndWeb(resumeLines):
-  #regex = getRegex()
-  #tags = ['html', '.com', '.edu', 'http', 'https', '.org', '.net', 'www.'
-  #      'HTML', '.COM', '.EDU', 'HTTP', 'HTTPS', '.ORG', '.NET', 'WWW.']
-  i = 0
-  for line in resumeLines:
-    for word in line.split():
-
-        #remove web#
-      for tag in tags:
-        if tag in word:
-          resumeLines[i] = line.replace(word, '<WEB-ADDRESS>')
-          break
-        #end#
-
-      try:
-        result = re.search(regex, word)
-        if result:
-          newline = line.replace(word, '<PHONE-NUMBER>')
-          resumeLines[i] = newline
-      except:
-        pass
-    i = i + 1
-'''
-
 def removePhoneAndWeb(line, tags, regex):
   for word in line.split():
-
       #remove web#
     for tag in tags:
-      if tag in word:
+      if tag in word.lower():
         line = line.replace(word, '<WEB-ADDRESS>')
         break
       #end#
@@ -62,8 +35,7 @@ def removePhoneAndWeb(line, tags, regex):
 
 
 def removePII(resumeLines, pii):
-  tags = ['html', '.com', '.edu', 'http', 'https', '.org', '.net', 'www.'
-        'HTML', '.COM', '.EDU', 'HTTP', 'HTTPS', '.ORG', '.NET', 'WWW.']
+  tags =  ['.com', '.edu', 'http', 'https', '.org', '.net', 'www.']
   regex = getRegex()
   #removePhoneAndWeb(resumeLines)
   i = 0 #ratchet -thomas
@@ -91,7 +63,7 @@ def getEntities(resumeLines, entityFile):
 
         if len(next_line) > 1:
           if word != 'PERSON' or next_line[0].isupper():
-            print word + " : " + next_line
+            #print word + " : " + next_line
             pii.append(next_line + '\\' + word)
        #break out of for loop
   pii.sort(lambda x,y: cmp(len(y), len(x)))
@@ -115,7 +87,7 @@ def callNLP(resumeLines):
 
 
 def getResumeTxtFilename(inputString):
-  os.system("python ../../../../pdfminer-master/pdf2txt.py -o %s.txt -t text %s.pdf" % (str(inputString), str(inputString)))
+  os.system("./pdftotext %s.pdf -enc UTF-8 -layout" % str(inputString))
   txtFilename = inputString + ".txt"
   return txtFilename
 
@@ -138,18 +110,18 @@ if __name__ == '__main__':
   '''end'''
 
     #step 1
-#inputString = getInputFile()
-inputString = 'resumehutton_pdf' #temporary
+inputString = getInputFile()
+#inputString = 'resumehutton_pdf' #temporary
 
     #step 2
-#resumeTxtFilename = getResumeTxtFilename(inputString)
-resumeTxtFilename =  'resumehutton_pdf.txt' #temporary
+resumeTxtFilename = getResumeTxtFilename(inputString)
+#resumeTxtFilename =  'resumehutton_pdf.txt' #temporary
 with open(resumeTxtFilename) as resumeTxtFile:
   resumeLines = resumeTxtFile.readlines()
 
     #step 3
-#entityFilename = callNLP(resumeLines)
-entityFilename = 'huttonEntities.txt' #temporary
+entityFilename = callNLP(resumeLines)
+#entityFilename = 'huttonEntities.txt' #temporary
 entityFile = open(entityFilename, 'r')
 pii = getEntities(resumeLines, entityFile)
 entityFile.close()

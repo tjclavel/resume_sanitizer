@@ -2,9 +2,9 @@
 
 sanitizes personally identifiable information in a resume
 
-usage: file.py:
+usage: sanitizer.py
 
-from sanitizer import sanitize
-
+...
+...
 
 print sanitize(filename)

@@ -91,14 +91,8 @@ def getResumeTxtFilename(inputString):
   txtFilename = inputString + ".txt"
   return txtFilename
 
-def getInputFile():
-  if(len(sys.argv) != 2):
-    print 'Usage: python sanitizer.py <filename.pdf>'
-    return
-  pdfInputString = sys.argv[1]
-  return pdfInputString[:-4]
 
-def sanitize():
+def sanitize(inputFile):
 
   '''outline of steps in this process'''
   # 1. get desired pdf file
@@ -107,10 +101,8 @@ def sanitize():
   # 4. go through the pdf2text output again, this time removing pii from pii list and saving them into line list
   # 5. read lines from line list into a string
   '''end'''
-
-    #step 1
-  inputString = getInputFile()
-  #inputString = 'resumehutton_pdf' #temporary
+  
+  inputString = inputFile[:-4]
 
     #step 2
   resumeTxtFilename = getResumeTxtFilename(inputString)

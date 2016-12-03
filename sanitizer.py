@@ -105,7 +105,7 @@ def sanitize():
   # 2. run that file through pdf2text
   # 3. take the output of pdf2text and run that through google NLP, getting a pii list from that
   # 4. go through the pdf2text output again, this time removing pii from pii list and saving them into line list
-  # 5. read lines from line list into a new file
+  # 5. read lines from line list into a string
   '''end'''
 
     #step 1

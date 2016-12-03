@@ -98,8 +98,7 @@ def getInputFile():
   pdfInputString = sys.argv[1]
   return pdfInputString[:-4]
 
-
-if __name__ == '__main__':
+def sanitize():
 
   '''outline of steps in this process'''
   # 1. get desired pdf file
@@ -110,28 +109,25 @@ if __name__ == '__main__':
   '''end'''
 
     #step 1
-inputString = getInputFile()
-#inputString = 'resumehutton_pdf' #temporary
+  inputString = getInputFile()
+  #inputString = 'resumehutton_pdf' #temporary
 
     #step 2
-resumeTxtFilename = getResumeTxtFilename(inputString)
-#resumeTxtFilename =  'resumehutton_pdf.txt' #temporary
-with open(resumeTxtFilename) as resumeTxtFile:
+  resumeTxtFilename = getResumeTxtFilename(inputString)
+  #resumeTxtFilename =  'resumehutton_pdf.txt' #temporary
+  with open(resumeTxtFilename) as resumeTxtFile:
   resumeLines = resumeTxtFile.readlines()
 
     #step 3
-entityFilename = callNLP(resumeLines)
-#entityFilename = 'huttonEntities.txt' #temporary
-entityFile = open(entityFilename, 'r')
-pii = getEntities(resumeLines, entityFile)
-entityFile.close()
+  entityFilename = callNLP(resumeLines)
+  #entityFilename = 'huttonEntities.txt' #temporary
+  entityFile = open(entityFilename, 'r')
+  pii = getEntities(resumeLines, entityFile)
+  entityFile.close()
   
     #step 4
-editedLines = removePII(resumeLines, pii)
+  editedLines = removePII(resumeLines, pii)
 
     #step 5
-output = open(inputString + '_sanitized.txt', 'w')
-for line in editedLines:
-  output.write(line)
-output.close()
+  return ''.join(editedLines)
 

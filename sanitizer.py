@@ -42,7 +42,7 @@ def removePII(resumeLines, pii):
     for pairs in pii:
       pair = pairs.split('\\')
       for word in line.split():
-        if word == part[0]:
+        if word == pair[0]:
           line = line.replace(pair[0], '<' + pair[1] + '>')
     resumeLines[i] = line
     i = i + 1
@@ -122,4 +122,6 @@ def sanitize(inputFile):
 
     #step 5
   return ''.join(editedLines)
+
+#call sanitize(<filename>)
 

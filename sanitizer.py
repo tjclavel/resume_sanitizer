@@ -124,4 +124,5 @@ def sanitize(inputFile):
   return ''.join(editedLines)
 
 #call sanitize(<filename>)
-
+if '__name__' == '__main__':
+  sanitize(sys.args[1])

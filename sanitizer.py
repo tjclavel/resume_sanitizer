@@ -108,7 +108,7 @@ def sanitize(inputFile):
   resumeTxtFilename = getResumeTxtFilename(inputString)
   #resumeTxtFilename =  'resumehutton_pdf.txt' #temporary
   with open(resumeTxtFilename) as resumeTxtFile:
-  resumeLines = resumeTxtFile.readlines()
+    resumeLines = resumeTxtFile.readlines()
 
     #step 3
   entityFilename = callNLP(resumeLines)

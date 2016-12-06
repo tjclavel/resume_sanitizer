@@ -14,7 +14,7 @@ def getRegex():
   return regular_expression
 
 def getRegex_zip():
-  regular_expression = re.compile(r'9([0-2]|3[0-5]).+')
+  regular_expression = re.compile(r'.*(\d{5}(\-\d{4})?)$')
   return regular_expression
 
 

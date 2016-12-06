@@ -13,8 +13,12 @@ def getRegex():
                                   , re.IGNORECASE)
   return regular_expression
 
+def getRegex_zip():
+  regular_expression = re.compile(r'9([0-2]|3[0-5]).+')
+  return regular_expression
 
-def removePhoneAndWeb(line, tags, regex):
+
+def removePhoneAndWeb(line, tags, regex_phone, regex_zip):
   for word in line.split():
       #remove web#
     for tag in tags:
@@ -24,9 +28,12 @@ def removePhoneAndWeb(line, tags, regex):
       #end#
 
     try:
-      result = re.search(regex, word)
+      result = re.search(regex_phone, word)
       if result:
         line = line.replace(word, '<PHONE-NUMBER>')
+      result = re.search(regex_zip, word)
+      if result:
+        line = line.replace(word, '<ZIPCODE>')
     except:
       pass
   return line
@@ -34,11 +41,12 @@ def removePhoneAndWeb(line, tags, regex):
 
 def removePII(resumeLines, pii):
   tags =  ['@', '.com', '.edu', 'http', 'https', '.org', '.net', 'www.']
-  regex = getRegex()
+  regex_phone = getRegex()
+  regex_zip = getRegex_zip()
   #removePhoneAndWeb(resumeLines)
   i = 0 #ratchet -thomas
   for line in resumeLines:
-    line = removePhoneAndWeb(line, tags, regex)
+    line = removePhoneAndWeb(line, tags, regex_phone, regex_zip)
     for pairs in pii:
       pair = pairs.split('\\')
       for word in line.split():

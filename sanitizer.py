@@ -49,9 +49,8 @@ def removePII(resumeLines, pii):
     line = removePhoneAndWeb(line, tags, regex_phone, regex_zip)
     for pairs in pii:
       pair = pairs.split('\\')
-      for word in line.split():
-        if word == pair[0]:
-          line = line.replace(pair[0], '<' + pair[1] + '>')
+      line = line.replace(pair[0] + ' ', '<' + pair[1] + '> ')
+      line = line.replace(' ' + pair[0], ' <' + pair[1] + '>')
     resumeLines[i] = line
     i = i + 1
   return resumeLines
@@ -71,7 +70,6 @@ def getEntities(resumeLines, entityFile):
 
         if len(next_line) > 1:
           if word != 'PERSON' or next_line[0].isupper():
-            #print word + " : " + next_line
             pii.append(next_line + '\\' + word)
        #break out of for loop
   pii.sort(lambda x,y: cmp(len(y), len(x)))

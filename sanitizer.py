@@ -31,7 +31,7 @@ def call_NLP(resume_lines):
   resume_str = "\"" + resume_str + "\""
   os.system("python analyze.py entities %s > entities.txt" % str(resume_str))
 
-  def get_entities(resume_lines, entity_file):
+def get_entities(resume_lines, entity_file):
   entities = ['LOCATION', 'ORGANIZATION', 'PERSON']
   pii = []
   for entity_line in entity_file:
